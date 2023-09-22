@@ -8,4 +8,5 @@ import (
 
 type APIPorts interface {
 	GetCreate(context.Context, *invoicer.CreateRequest) (*invoicer.CreateResponseMessage, error)
+	CreateReport(ctx context.Context, i *invoicer.CreateReportRequest) (*invoicer.CreateReportResponse, error)
 }

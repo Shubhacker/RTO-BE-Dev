@@ -4,9 +4,13 @@ import (
 	"log"
 	"net"
 
+	DB "github.com/Shubhacker/RTO-BE-Dev/Adapters/Database"
+	"github.com/Shubhacker/RTO-BE-Dev/Adapters/model"
 	endpoints "github.com/Shubhacker/RTO-BE-Dev/Endpoints"
 	"google.golang.org/grpc"
 )
+
+var DBConn *model.Conn
 
 func main() {
 	log.Println("Running Main")
@@ -17,7 +21,7 @@ func main() {
 
 	log.Println("Starting server")
 	s := grpc.NewServer()
-
+	DBConn = DB.DBInit()
 	endpoints.Endpoints(s)
 
 	err2 := s.Serve(net)

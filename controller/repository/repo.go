@@ -24,3 +24,9 @@ func (api Adapters) GetCreate(ctx context.Context, i *invoicer.CreateRequest) (*
 	api.cr.Create(ctx, i)
 	return result, nil
 }
+
+func CreateReport(ctx context.Context, i *invoicer.CreateReportRequest) (*invoicer.CreateReportResponse, error) {
+	var result invoicer.CreateReportResponse
+	log.Println("inside Adapter package for CreateReportAPI")
+	return &result, nil
+}
