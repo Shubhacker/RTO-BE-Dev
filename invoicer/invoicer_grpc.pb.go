@@ -23,6 +23,10 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type InvoicerClient interface {
 	Create(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponseMessage, error)
+	CreateReport(ctx context.Context, in *CreateReportRequest, opts ...grpc.CallOption) (*CreateReportResponse, error)
+	Social(ctx context.Context, in *SocialRequest, opts ...grpc.CallOption) (*SocialData, error)
+	ReactOnSocialReport(ctx context.Context, in *ReactSocialRequest, opts ...grpc.CallOption) (*ReactSocialResponce, error)
+	ReportSocialComments(ctx context.Context, in *ReportSocialCommentsRequest, opts ...grpc.CallOption) (*ReportSocialCommentsResponse, error)
 }
 
 type invoicerClient struct {
@@ -42,11 +46,51 @@ func (c *invoicerClient) Create(ctx context.Context, in *CreateRequest, opts ...
 	return out, nil
 }
 
+func (c *invoicerClient) CreateReport(ctx context.Context, in *CreateReportRequest, opts ...grpc.CallOption) (*CreateReportResponse, error) {
+	out := new(CreateReportResponse)
+	err := c.cc.Invoke(ctx, "/Invoicer/CreateReport", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *invoicerClient) Social(ctx context.Context, in *SocialRequest, opts ...grpc.CallOption) (*SocialData, error) {
+	out := new(SocialData)
+	err := c.cc.Invoke(ctx, "/Invoicer/Social", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *invoicerClient) ReactOnSocialReport(ctx context.Context, in *ReactSocialRequest, opts ...grpc.CallOption) (*ReactSocialResponce, error) {
+	out := new(ReactSocialResponce)
+	err := c.cc.Invoke(ctx, "/Invoicer/ReactOnSocialReport", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *invoicerClient) ReportSocialComments(ctx context.Context, in *ReportSocialCommentsRequest, opts ...grpc.CallOption) (*ReportSocialCommentsResponse, error) {
+	out := new(ReportSocialCommentsResponse)
+	err := c.cc.Invoke(ctx, "/Invoicer/ReportSocialComments", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // InvoicerServer is the server API for Invoicer service.
 // All implementations must embed UnimplementedInvoicerServer
 // for forward compatibility
 type InvoicerServer interface {
 	Create(context.Context, *CreateRequest) (*CreateResponseMessage, error)
+	CreateReport(context.Context, *CreateReportRequest) (*CreateReportResponse, error)
+	Social(context.Context, *SocialRequest) (*SocialData, error)
+	ReactOnSocialReport(context.Context, *ReactSocialRequest) (*ReactSocialResponce, error)
+	ReportSocialComments(context.Context, *ReportSocialCommentsRequest) (*ReportSocialCommentsResponse, error)
 	mustEmbedUnimplementedInvoicerServer()
 }
 
@@ -56,6 +100,18 @@ type UnimplementedInvoicerServer struct {
 
 func (UnimplementedInvoicerServer) Create(context.Context, *CreateRequest) (*CreateResponseMessage, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
+}
+func (UnimplementedInvoicerServer) CreateReport(context.Context, *CreateReportRequest) (*CreateReportResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateReport not implemented")
+}
+func (UnimplementedInvoicerServer) Social(context.Context, *SocialRequest) (*SocialData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Social not implemented")
+}
+func (UnimplementedInvoicerServer) ReactOnSocialReport(context.Context, *ReactSocialRequest) (*ReactSocialResponce, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReactOnSocialReport not implemented")
+}
+func (UnimplementedInvoicerServer) ReportSocialComments(context.Context, *ReportSocialCommentsRequest) (*ReportSocialCommentsResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ReportSocialComments not implemented")
 }
 func (UnimplementedInvoicerServer) mustEmbedUnimplementedInvoicerServer() {}
 
@@ -88,6 +144,78 @@ func _Invoicer_Create_Handler(srv interface{}, ctx context.Context, dec func(int
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Invoicer_CreateReport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateReportRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicerServer).CreateReport(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Invoicer/CreateReport",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicerServer).CreateReport(ctx, req.(*CreateReportRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Invoicer_Social_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SocialRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicerServer).Social(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Invoicer/Social",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicerServer).Social(ctx, req.(*SocialRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Invoicer_ReactOnSocialReport_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReactSocialRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicerServer).ReactOnSocialReport(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Invoicer/ReactOnSocialReport",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicerServer).ReactOnSocialReport(ctx, req.(*ReactSocialRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Invoicer_ReportSocialComments_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ReportSocialCommentsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(InvoicerServer).ReportSocialComments(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/Invoicer/ReportSocialComments",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(InvoicerServer).ReportSocialComments(ctx, req.(*ReportSocialCommentsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Invoicer_ServiceDesc is the grpc.ServiceDesc for Invoicer service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -98,6 +226,22 @@ var Invoicer_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Create",
 			Handler:    _Invoicer_Create_Handler,
+		},
+		{
+			MethodName: "CreateReport",
+			Handler:    _Invoicer_CreateReport_Handler,
+		},
+		{
+			MethodName: "Social",
+			Handler:    _Invoicer_Social_Handler,
+		},
+		{
+			MethodName: "ReactOnSocialReport",
+			Handler:    _Invoicer_ReactOnSocialReport_Handler,
+		},
+		{
+			MethodName: "ReportSocialComments",
+			Handler:    _Invoicer_ReportSocialComments_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

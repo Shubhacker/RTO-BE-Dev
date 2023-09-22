@@ -1,0 +1,32 @@
+1 : 
+CreateReport : {
+        "vehicle_number": "MH16DG4040",
+        "by_rto": false,
+        "comment": "Worst driver",
+        "ImageUrls": ["Image1"],
+        "location": "1123.5424",
+        "OffenseList": ["Not adhering to road rules", "Overspeeding_Car"],
+        "reported_by": "Dev"
+    }
+
+2 : 
+Social : {
+    "requestBy": "test"
+}
+
+3 : 
+
+ReactOnSocial {
+    "RequestId": "4473dbd9-bd57-449f-a656-e1afc2dc5e35",
+    "Like": false,
+    "DisAgree": true,
+    "DisLike": false,
+    "ValidReport": true
+}
+
+4: 
+{
+    "Comment": "Hallo",
+    "CommentBy": "Me",
+    "RequestId": "c450571c-96f7-4b8b-a7b4-5e239e280f66"
+}

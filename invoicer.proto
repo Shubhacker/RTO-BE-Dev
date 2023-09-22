@@ -16,6 +16,78 @@ message CreateResponseMessage{
     bytes pdf = 1;
 }
 
+message CreateReportRequest{
+    repeated string ImageUrls = 1;
+    repeated string OffenseList = 2;
+    string location = 3;
+    bool by_rto = 4;
+    string vehicle_number = 5;
+    string comment = 6;
+    string reported_by = 7;
+}
+
+message CreateReportResponse {
+    string message = 1;
+    int32 messageCode = 2;
+}
+
+message Comments {
+    string comment =1;
+    string commentAt =2;
+    string commentBy =3;
+    int64 commentLikes =4;
+    int64 commentDislikes=5;
+}
+
+message SocialDataArray {
+    string requestId = 1;
+    repeated string imageUrls = 2;
+    string location =3;
+    repeated string offense = 4;
+    bool subnitted_by_RTO = 5;
+    int64 totalFine =6;
+    bool RTO_Approved =7;
+    int64 likes =8;
+    int64 dislikes =9;
+    int64 validReport =10;
+    int64 dislikeReport =11;
+    repeated Comments commentData =12;
+}
+
+message SocialData {
+    repeated SocialDataArray socialData =1;
+}
+
+message SocialRequest {
+    string requestBy =1;
+}
+
+message ReactSocialRequest{
+    string RequestId=1;
+    bool Like=2;
+    bool DisLike=3;
+    bool DisAgree=4;
+    bool ValidReport=5;
+}
+
+message ReactSocialResponce{
+    bool Done=1;
+}
+
+message ReportSocialCommentsRequest{
+    string RequestId=1;
+    string Comment=2;
+    string CommentBy=3;
+}
+
+message ReportSocialCommentsResponse{
+    bool Done=1;
+}
+
 service Invoicer{
     rpc Create(CreateRequest) returns (CreateResponseMessage);
+    rpc CreateReport(CreateReportRequest) returns (CreateReportResponse);
+    rpc Social(SocialRequest) returns (SocialData);
+    rpc ReactOnSocialReport(ReactSocialRequest) returns (ReactSocialResponce);
+    rpc ReportSocialComments(ReportSocialCommentsRequest) returns (ReportSocialCommentsResponse);
 }
